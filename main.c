@@ -33,7 +33,7 @@ void input(char **command, size_t *size)
 
 	read_bytes = getline(command, size, stdin);
 
-	if (read_bytes < 0)
+	if ((int)read_bytes == -1)
 	{
 		if (feof(stdin))
 		{
@@ -46,7 +46,7 @@ void input(char **command, size_t *size)
 			exit(EXIT_FAILURE);
 		}
 	}
-	if (*(command)[read_bytes - 1] == '\n')
+	if ((*command)[read_bytes - 1] == '\n')
 	{
 		(*command)[read_bytes - 1] = '\0';
 	}
@@ -66,23 +66,18 @@ void display_prompt(void)
  * Return: 0 on success
  */
 
-int main(void)
-{
-	char *command = NULL;
-	size_t size = 0;
-
-	while (1)
-	{
-		display_prompt();
-		input(&command, &size);
-		if (strcmp(command, "exit") == 0)
-		{
-			free(command);
-			exit(EXIT_SUCCESS);
-		}
-		parse(command);
-	}
-
-	free(command);
-	return (0);
+int main(void) {
+    char *command = NULL;
+    size_t size = 0;
+    while (1) {
+        printf("$ ");
+        input(&command, &size);
+        if (strcmp(command, "exit") == 0) {
+            free(command);
+            exit(EXIT_SUCCESS);
+        }
+        parse(command);
+    }
+    free(command);
+    return 0;
 }
