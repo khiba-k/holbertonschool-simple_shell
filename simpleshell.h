@@ -11,7 +11,7 @@
 #include <sys/wait.h>
 
 void display_prompt(void);
-int execute(char *cmd, char *const command[]);
+int execute(char *const command[]);
 void parse(char command[]);
 
 #endif /* SIMPLE_SHELL */

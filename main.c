@@ -18,7 +18,7 @@ void parse(char command[])
 	}
 	arguments[arg_count] = NULL;
 	if (arg_count > 0)
-		execute(arguments[0], arguments);
+		execute(arguments);
 }
 
 /**
