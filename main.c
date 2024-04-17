@@ -33,7 +33,7 @@ void input(char **command, size_t *size)
 
 	read_bytes = getline(command, size, stdin);
 
-	if (read_bytes == -1)
+	if (read_bytes < 0)
 	{
 		if (feof(stdin))
 		{

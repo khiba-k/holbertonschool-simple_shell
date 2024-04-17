@@ -13,6 +13,6 @@
 void display_prompt(void);
 int execute(char *const command[]);
 void parse(char command[]);
-void input(char **command, size_t size);
+void input(char **command, size_t *size);
 
 #endif /* SIMPLE_SHELL */
