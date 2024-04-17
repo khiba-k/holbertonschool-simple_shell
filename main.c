@@ -51,7 +51,7 @@ void input(char *command, size_t size)
 
 void display_prompt(void)
 {
-	printf("$ ");
+	printf("$");
 }
 
 /**
