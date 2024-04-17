@@ -27,9 +27,13 @@ void parse(char command[])
  * @size: size of argument
  */
 
-void input(char *command, size_t size)
+void input(char **command, size_t *size)
 {
-	if (fgets(command, size, stdin) == NULL)
+	size_t read_bytes;
+
+	read_bytes = getline(command, size, stdin);
+
+	if (read_bytes == -1)
 	{
 		if (feof(stdin))
 		{
@@ -42,7 +46,10 @@ void input(char *command, size_t size)
 			exit(EXIT_FAILURE);
 		}
 	}
-	command[strcspn(command, "\n")] = '\0';
+	if (*(command)[read_bytes - 1] == '\n')
+	{
+		(*command)[read_bytes - 1] = '\0';
+	}
 }
 
 /**
@@ -61,15 +68,21 @@ void display_prompt(void)
 
 int main(void)
 {
-	char command[1024];
+	char *command = NULL;
+	size_t size = 0;
 
 	while (1)
 	{
 		display_prompt();
-		input(command, sizeof(command));
+		input(&command, &size);
 		if (strcmp(command, "exit") == 0)
+		{
+			free(command);
 			exit(EXIT_SUCCESS);
+		}
 		parse(command);
 	}
+
+	free(command);
 	return (0);
 }
