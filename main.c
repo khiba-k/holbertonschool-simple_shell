@@ -32,33 +32,14 @@ void input(char **command, size_t *size)
 	size_t read_bytes;
 
 	read_bytes = getline(command, size, stdin);
-
-	if ((int)read_bytes == -1)
+	if ((int) read_bytes == EOF)
 	{
-		if (feof(stdin))
-		{
+		if (isatty(STDIN_FILENO) != 0)
 			printf("\n");
-			exit(EXIT_SUCCESS);
-		}
-		else
-		{
-			printf("Error while reading input.\n");
-			exit(EXIT_FAILURE);
-		}
+		exit(EXIT_SUCCESS);
 	}
 	if ((*command)[read_bytes - 1] == '\n')
-	{
 		(*command)[read_bytes - 1] = '\0';
-	}
-}
-
-/**
- * display_prompt - dollar sign to display before each prompt
- */
-
-void display_prompt(void)
-{
-	write(STDOUT_FILENO, "$ ", strlen("$ "));
 }
 
 /**
@@ -66,11 +47,19 @@ void display_prompt(void)
  * Return: 0 on success
  */
 
-int main(void) {
+int main(int argc, char *argv[]) {
     char *command = NULL;
     size_t size = 0;
+
+    (void) argv;
+    if (argc > 1)
+    {
+	    printf("./shell: command does not exist");
+	    exit(EXIT_FAILURE);
+    }
     while (1) {
-        printf("$ ");
+	if (isatty(STDIN_FILENO))
+	       printf("($) ");	
         input(&command, &size);
         if (strcmp(command, "exit") == 0) {
             free(command);
@@ -78,6 +67,6 @@ int main(void) {
         }
         parse(command);
     }
-    free(command);
     return 0;
 }
+

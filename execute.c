@@ -19,7 +19,7 @@ int execute(char *const command[])
 	else if (id == 0)
 	{
 		execvp(command[0], command);
-		perror("execv failed");
+		perror("command does not exist");
 		exit(EXIT_FAILURE);
 	}
 	else
