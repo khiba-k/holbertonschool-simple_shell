@@ -67,6 +67,7 @@ int main(int argc, char *argv[]) {
         }
         parse(command);
     }
+    free(command);
     return 0;
 }
 
