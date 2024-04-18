@@ -9,7 +9,7 @@
 int execute(char *const command[])
 {
 	pid_t id = fork();
-	int status;
+	int status, i;
 
 	if (id < 0)
 	{
@@ -20,7 +20,9 @@ int execute(char *const command[])
 	{
 		execvp(command[0], command);
 		perror("command does not exist");
-		free(*command);
+		for (i = 0; command[i] != NULL; i++) {
+    			free(command[i]);
+		}
 		exit(EXIT_FAILURE);
 	}
 	else
@@ -29,3 +31,4 @@ int execute(char *const command[])
 	}
 	return (0);
 }
+

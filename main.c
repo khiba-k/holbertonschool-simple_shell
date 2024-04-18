@@ -41,6 +41,7 @@ void input(char **command, size_t *size)
 	{
 		if (isatty(STDIN_FILENO) != 0)
 			printf("\n");
+		free(command);
 		exit(EXIT_SUCCESS);
 	}
 	if ((*command)[read_bytes - 1] == '\n')
@@ -54,7 +55,7 @@ void input(char **command, size_t *size)
 
 int main(int argc, char *argv[]) {
     char *command = NULL;
-    size_t size = 0;
+    size_t size;
 
     (void) argv;
     if (argc > 1)
@@ -63,6 +64,7 @@ int main(int argc, char *argv[]) {
 	    exit(EXIT_FAILURE);
     }
     while (1) {
+	size = 0;
 	if (isatty(STDIN_FILENO))
 	       printf("($) ");	
         input(&command, &size);
@@ -71,8 +73,8 @@ int main(int argc, char *argv[]) {
             exit(EXIT_SUCCESS);
         }
         parse(command);
+	free(command);
     }
-    free(command);
     return 0;
 }
 
