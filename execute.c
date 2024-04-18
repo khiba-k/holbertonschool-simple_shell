@@ -20,6 +20,7 @@ int execute(char *const command[])
 	{
 		execvp(command[0], command);
 		perror("command does not exist");
+		free(*command);
 		exit(EXIT_FAILURE);
 	}
 	else

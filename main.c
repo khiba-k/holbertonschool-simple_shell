@@ -7,7 +7,7 @@
 
 void parse(char command[])
 {
-	char *arguments[10];
+	char *arguments[11];
 	char *token = strtok(command, " ");
 	int arg_count = 0;
 
@@ -16,6 +16,11 @@ void parse(char command[])
 		arguments[arg_count++] = token;
 		token = strtok(NULL, " ");
 	}
+	if (arg_count > 11)
+        {
+                perror("Error: Too many arguments");
+                return;
+        }
 	arguments[arg_count] = NULL;
 	if (arg_count > 0)
 		execute(arguments);
@@ -66,8 +71,8 @@ int main(int argc, char *argv[]) {
             exit(EXIT_SUCCESS);
         }
         parse(command);
-	free(command);
     }
+    free(command);
     return 0;
 }
 
