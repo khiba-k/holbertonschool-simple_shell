@@ -70,12 +70,13 @@ char **pathfinder(char *cmd, char **command)
 
 int execute(char *const command[], char **envp)
 {
-	pid_t id = fork();
+	pid_t id;
 	int status, i;
 	char **temp = pathfinder(command[0], (char **) command);
 
 	if (temp != NULL)
 	{
+		id = fork();
 		if (id < 0)
 		{
 			perror("fork failed");
@@ -83,15 +84,15 @@ int execute(char *const command[], char **envp)
 		}
 		else if (id == 0)
 		{
-			execve(command[0], command, envp);
-			perror("command does not exist");
+			execve(temp[0], command, envp);
 			for (i = 0; command[i] != NULL; i++)
     				free(command[i]);
 			exit(EXIT_FAILURE);
 		}
 		wait(&status);
 		free(fullpath);
-	}
+	} else
+		perror("command does not exist");
 	return (0);
 }
 
