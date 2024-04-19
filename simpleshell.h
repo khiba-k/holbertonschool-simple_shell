@@ -11,6 +11,7 @@
 #include <sys/wait.h>
 
 int execute(char *const command[], char **envp);
+int print_env(void);
 void parse(char command[], char **envp);
 
 #endif /* SIMPLE_SHELL */
