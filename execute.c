@@ -29,14 +29,13 @@ char *_getenv(const char *name) {
  * Return: pointer to the string array or NULL if failed
  */
 
-char **pathfinder(char *cmd, char **command, char **envp)
+char **pathfinder(char *cmd, char **command)
 {
     char *current_path, *temp_path;
     char *path_tok;
     size_t arglen = strlen(cmd);
 
     fullpath = NULL;
-    (void) envp;
     if (strchr(cmd, '/') != NULL && access(cmd, F_OK) == 0)
     {
         command[0] = cmd;
@@ -73,7 +72,7 @@ int execute(char *const command[], char **envp)
 {
 	pid_t id = fork();
 	int status, i;
-	char **temp = pathfinder(command[0], (char **) command, envp);
+	char **temp = pathfinder(command[0], (char **) command);
 
 	if (temp != NULL)
 	{
