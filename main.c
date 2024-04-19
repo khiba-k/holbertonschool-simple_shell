@@ -54,7 +54,7 @@ void input(char **command, size_t *size)
  * Return: 0 on success
  */
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[], char **envp) {
     char *command = NULL;
     size_t size;
 
