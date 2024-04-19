@@ -9,7 +9,7 @@ void parse(char command[])
 {
 	char *arguments[11];
 	char *token = strtok(command, " ");
-	int arg_count = 0;
+	int arg_count = 0, i;
 
 	while (token != NULL && arg_count < 10)
 	{
@@ -24,6 +24,8 @@ void parse(char command[])
 	arguments[arg_count] = NULL;
 	if (arg_count > 0)
 		execute(arguments);
+	for (i = 0; i < arg_count; i++)
+        	free(arguments[i]);
 }
 
 /**
@@ -41,11 +43,11 @@ void input(char **command, size_t *size)
 	{
 		if (isatty(STDIN_FILENO) != 0)
 			printf("\n");
-		free(command);
 		exit(EXIT_SUCCESS);
 	}
 	if ((*command)[read_bytes - 1] == '\n')
 		(*command)[read_bytes - 1] = '\0';
+	/*free(command);*/
 }
 
 /**
