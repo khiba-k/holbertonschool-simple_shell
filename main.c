@@ -36,15 +36,13 @@ void input(char **command, size_t *size)
 {
 	size_t read_bytes;
 
-	/*if (*command != NULL)
-	{
-        	free(*command);
-    	}*/
 	read_bytes = getline(command, size, stdin);
 	if ((int) read_bytes == EOF)
 	{
 		if (isatty(STDIN_FILENO) != 0)
 			printf("\n");
+		if (*command != NULL)
+			free(*command);
 		exit(EXIT_SUCCESS);
 	}
 	if ((*command)[read_bytes - 1] == '\n')
@@ -66,7 +64,8 @@ int main(int argc, char *argv[]) {
 	    printf("./shell: command does not exist");
 	    exit(EXIT_FAILURE);
     }
-    while (1) {
+    while (1) 
+    {
 	size = 0;
 	if (isatty(STDIN_FILENO))
 	       printf("($) ");
@@ -79,7 +78,6 @@ int main(int argc, char *argv[]) {
         }
         parse(command);
 	free(command);
-
     }
     return 0;
 }
