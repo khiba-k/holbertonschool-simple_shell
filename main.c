@@ -9,7 +9,7 @@ void parse(char command[])
 {
 	char *arguments[11];
 	char *token = strtok(command, " ");
-	int arg_count = 0, i;
+	int arg_count = 0;
 
 	while (token != NULL && arg_count < 10)
 	{
@@ -24,8 +24,6 @@ void parse(char command[])
 	arguments[arg_count] = NULL;
 	if (arg_count > 0)
 		execute(arguments);
-	for (i = 0; i < arg_count; i++)
-        	free(arguments[i]);
 }
 
 /**
@@ -38,6 +36,10 @@ void input(char **command, size_t *size)
 {
 	size_t read_bytes;
 
+	/*if (*command != NULL)
+	{
+        	free(*command);
+    	}*/
 	read_bytes = getline(command, size, stdin);
 	if ((int) read_bytes == EOF)
 	{
@@ -47,7 +49,6 @@ void input(char **command, size_t *size)
 	}
 	if ((*command)[read_bytes - 1] == '\n')
 		(*command)[read_bytes - 1] = '\0';
-	/*free(command);*/
 }
 
 /**
@@ -68,14 +69,17 @@ int main(int argc, char *argv[]) {
     while (1) {
 	size = 0;
 	if (isatty(STDIN_FILENO))
-	       printf("($) ");	
+	       printf("($) ");
+
         input(&command, &size);
-        if (strcmp(command, "exit") == 0) {
+        if (strcmp(command, "exit") == 0)
+	{
             free(command);
             exit(EXIT_SUCCESS);
         }
         parse(command);
 	free(command);
+
     }
     return 0;
 }
