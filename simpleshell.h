@@ -10,8 +10,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-void display_prompt(void);
-int execute(char *const command[]);
-void parse(char command[]);
+int execute(char *const command[], char **envp);
+void parse(char command[], char **envp);
 
 #endif /* SIMPLE_SHELL */

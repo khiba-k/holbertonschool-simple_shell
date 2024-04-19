@@ -1,11 +1,28 @@
 #include "simpleshell.h"
 
+char **env, *command;
+
+/**
+ * print_env - prints the environment
+ * Return: zero
+ */
+
+int print_env(void)
+{
+    int i = 0;
+    while (env[i])
+    {
+        printf("%s\n", env[i++]);
+    }
+    return (0);
+}
+
 /**
  * parse - tokenizes
  * @command: command from the user
  */
 
-void parse(char command[])
+void parse(char command[], char **envp)
 {
 	char *arguments[11];
 	char *token = strtok(command, " ");
@@ -23,7 +40,7 @@ void parse(char command[])
         }
 	arguments[arg_count] = NULL;
 	if (arg_count > 0)
-		execute(arguments);
+		execute(arguments, envp);
 }
 
 /**
@@ -50,14 +67,18 @@ void input(char **command, size_t *size)
 }
 
 /**
- * main - entry point to program
- * Return: 0 on success
+ * main - Shell, interactive or non interactive
+ * @argc: argument count
+ * @argv: argument vector
+ * @envp: environmental variable
+ * Return: 1 if command fails
  */
 
-int main(int argc, char *argv[], char **envp) {
-    char *command = NULL;
+int main(int argc, char *argv[], char **envp) { 
     size_t size;
 
+    env = envp;
+    command = NULL;
     (void) argv;
     if (argc > 1)
     {
@@ -76,9 +97,15 @@ int main(int argc, char *argv[], char **envp) {
             free(command);
             exit(EXIT_SUCCESS);
         }
-        parse(command);
+	if (strcmp(command, "env") == 0)
+    	{
+        	print_env();
+        	exit(EXIT_SUCCESS);
+    	}
+        parse(command, envp);
 	free(command);
     }
+    free(env);
     return 0;
 }
 
