@@ -43,6 +43,8 @@ char **pathfinder(char *cmd, char **command)
     }
     path_tok = NULL;
     current_path = _getenv("PATH");
+    if (current_path == NULL || *current_path == '\0')
+	    return (NULL);
     temp_path = strdup(current_path);
     path_tok = strtok(temp_path, ":");
     while (path_tok)
@@ -84,6 +86,11 @@ int execute(char *const command[], char **envp)
 		}
 		else if (id == 0)
 		{
+			if (_getenv("PATH") == NULL && access(command[0], F_OK) != 0)
+            		{
+                		fprintf(stderr, "./hsh: 1: %s: not found\n", command[0]);
+                		exit(EXIT_FAILURE);
+            		}
 			execve(temp[0], command, envp);
 			for (i = 0; command[i] != NULL; i++)
     				free(command[i]);

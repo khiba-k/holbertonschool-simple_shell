@@ -100,6 +100,7 @@ int main(int argc, char *argv[], char **envp) {
 	if (strcmp(command, "env") == 0)
     	{
         	print_env();
+		free(command);
         	exit(EXIT_SUCCESS);
     	}
         parse(command, envp);
