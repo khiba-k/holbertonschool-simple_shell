@@ -94,7 +94,7 @@ int main(int argc, char *argv[], char **envp) {
     (void) argv;
     if (argc > 1)
     {
-	    printf("./shell: command does not exist");
+	    printf("./shell: command does not exist\n");
 	    exit(EXIT_FAILURE);
     }
     while (1) 
@@ -115,7 +115,7 @@ int main(int argc, char *argv[], char **envp) {
 		free(command);
         	exit(EXIT_SUCCESS);
     	}
-	if (envp == NULL || envp[0] == NULL)
+	if (_getenv("PATH") == NULL)
     	{
 		if (command[0] != '/')
 		{

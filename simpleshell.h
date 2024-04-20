@@ -12,6 +12,7 @@
 
 int execute(char *const command[], char **envp);
 int print_env(void);
+char *_getenv(const char *name);
 void parse(char command[], char **envp);
 
 #endif /* SIMPLE_SHELL */
