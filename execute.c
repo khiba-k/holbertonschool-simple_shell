@@ -43,11 +43,11 @@ char **pathfinder(char *cmd, char **command)
     }
     path_tok = NULL;
     current_path = _getenv("PATH");
-    if (current_path == NULL || *current_path == '\0')
+  /*  if (current_path == NULL || *current_path == '\0')
     {
 	    perror("./hsh: 1: ls: not found");
 	    exit(EXIT_FAILURE);
-    }
+    }*/
     temp_path = strdup(current_path);
     path_tok = strtok(temp_path, ":");
     while (path_tok)
