@@ -89,7 +89,7 @@ int execute(char *const command[], char **envp)
 		}
 		else if (id == 0)
 		{
-			if (_getenv("PATH") == "" && access(command[0], F_OK) != 0)
+			if (strcmp(_getenv("PATH"),  "") == 0 && access(command[0], F_OK) != 0)
             		{
                 		fprintf(stderr, "./hsh: 1: %s: not found\n", command[0]);
                 		exit(EXIT_FAILURE);
