@@ -44,10 +44,7 @@ char **pathfinder(char *cmd, char **command)
     path_tok = NULL;
     current_path = _getenv("PATH");
     if (current_path == NULL || *current_path == '\0')
-    {
-	    print_env();
-	    exit(EXIT_SUCCESS);
-    }
+	    exit(EXIT_FAILURE);
     temp_path = strdup(current_path);
     path_tok = strtok(temp_path, ":");
     while (path_tok)
