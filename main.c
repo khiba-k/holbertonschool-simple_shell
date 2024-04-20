@@ -125,7 +125,7 @@ int main(int argc, char *argv[], char **envp) {
         parse(command, envp);
 	free(command);
     }
-    free(env);
+    free(envp);
     return 0;
 }
 
