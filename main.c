@@ -79,6 +79,7 @@ int main(int argc, char *argv[], char **envp) {
 
     env = envp;
     command = NULL;
+
     (void) argv;
     if (argc > 1)
     {
@@ -102,6 +103,15 @@ int main(int argc, char *argv[], char **envp) {
         	print_env();
 		free(command);
         	exit(EXIT_SUCCESS);
+    	}
+	if (envp == NULL)
+    	{
+		if (command[0] != '/')
+		{
+            		fprintf(stderr, "./hsh: 1: %s: not found\n", command);
+            		free(command);
+            		exit(127);
+		}
     	}
         parse(command, envp);
 	free(command);

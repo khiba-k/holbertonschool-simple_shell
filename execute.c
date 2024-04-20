@@ -8,16 +8,9 @@ char *fullpath;
  * Return: pointer to environment variable
  */
 
-char *_getenv(const char *name, char **command) {
+char *_getenv(const char *name) {
     extern char **environ;
     char **env, *separator;
-
-    if (environ == NULL)
-    {
-	    fprintf(stderr, "./hsh: 1: %s: not found\n", command[0]);
-	    free(*command);
-	    exit(127);
-    }
 
     for (env = environ; *env != NULL; env++) {
         separator = strchr(*env, '=');
@@ -49,7 +42,7 @@ char **pathfinder(char *cmd, char **command)
         return (command);
     }
     path_tok = NULL;
-    current_path = _getenv("PATH", command);
+    current_path = _getenv("PATH");
     temp_path = strdup(current_path);
     path_tok = strtok(temp_path, ":");
     while (path_tok)
@@ -91,7 +84,7 @@ int execute(char *const command[], char **envp)
 		}
 		else if (id == 0)
 		{
-			if (_getenv("PATH", (char **)command) == NULL && access(command[0], F_OK) != 0)
+			if (_getenv("PATH") == NULL && access(command[0], F_OK) != 0)
             		{
                 		fprintf(stderr, "./hsh: 1: %s: not found\n", command[0]);
 				free(*command);
