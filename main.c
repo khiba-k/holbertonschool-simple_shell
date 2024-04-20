@@ -28,6 +28,7 @@ void parse(char command[], char **envp)
 	char *token = strtok(command, " ");
 	int arg_count = 0;
 
+
 	while (token != NULL && arg_count < 10)
 	{
 		arguments[arg_count++] = token;
@@ -40,7 +41,15 @@ void parse(char command[], char **envp)
         }
 	arguments[arg_count] = NULL;
 	if (arg_count > 0)
-		execute(arguments, envp);
+    	{
+        	if (envp != NULL)
+            		execute(arguments, envp);
+        	else
+        	{
+            		fprintf(stderr, "./hsh: 1: %s: not found\n", arguments[0]);
+            		exit(127);
+        	}
+    	}
 }
 
 /**
