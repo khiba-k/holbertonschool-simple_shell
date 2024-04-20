@@ -103,6 +103,6 @@ int execute(char *const command[], char **envp)
 		free(*command);
 		exit(127);
 	}
-	return (0);
+	return (2);
 }
 
