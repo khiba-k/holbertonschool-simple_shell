@@ -10,6 +10,8 @@ char **env, *command;
 int print_env(void)
 {
     int i = 0;
+    if (env == NULL)
+	    return(-1);
     while (env[i])
     {
         printf("%s\n", env[i++]);
@@ -113,7 +115,7 @@ int main(int argc, char *argv[], char **envp) {
 		free(command);
         	exit(EXIT_SUCCESS);
     	}
-	if (envp == NULL)
+	if (*envp == NULL)
     	{
 		if (command[0] != '/')
 		{
