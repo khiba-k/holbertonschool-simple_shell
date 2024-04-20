@@ -115,7 +115,7 @@ int main(int argc, char *argv[], char **envp) {
 		free(command);
         	exit(EXIT_SUCCESS);
     	}
-	if (*envp == NULL || envp[0] == NULL)
+	if (envp == NULL || envp[0] == NULL)
     	{
 		if (command[0] != '/')
 		{
