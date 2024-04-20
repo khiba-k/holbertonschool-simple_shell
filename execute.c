@@ -104,6 +104,7 @@ int execute(char *const command[], char **envp)
 	} else
 	{
 		fprintf(stderr, "./hsh: 1: %s: not found\n", command[0]);
+		free(*command);
 		exit(127);
 	}
 	return (0);
