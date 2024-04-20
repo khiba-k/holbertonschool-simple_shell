@@ -89,7 +89,7 @@ int execute(char *const command[], char **envp)
 		}
 		else if (id == 0)
 		{
-			if (_getenv("PATH") == NULL && access(command[0], F_OK) != 0)
+			if (_getenv("PATH") == "" && access(command[0], F_OK) != 0)
             		{
                 		fprintf(stderr, "./hsh: 1: %s: not found\n", command[0]);
                 		exit(EXIT_FAILURE);
@@ -101,8 +101,7 @@ int execute(char *const command[], char **envp)
 		}
 		wait(&status);
 		free(fullpath);
-	} else
-		perror("command does not exist");
+	}
 	return (0);
 }
 
