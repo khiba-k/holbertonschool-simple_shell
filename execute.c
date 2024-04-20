@@ -102,7 +102,7 @@ int execute(char *const command[], char **envp)
 		wait(&status);
 		free(fullpath);
 	} else
-		fprintf(stderr, "./hsh: 1: %s: ALMOST found\n", command[0]);
+		fprintf(stderr, "./hsh: 1: %s: not found\n", command[0]);
 	return (0);
 }
 
