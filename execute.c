@@ -97,6 +97,10 @@ int execute(char *const command[], char **envp)
 		}
 		wait(&status);
 		free(fullpath);
+		if (WIFEXITED(status))
+            		return WEXITSTATUS(status);
+	    	else
+            		return (2);
 	} else
 	{
 		fprintf(stderr, "./hsh: 1: %s: not found\n", command[0]);
