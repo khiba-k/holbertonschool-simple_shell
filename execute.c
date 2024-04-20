@@ -89,10 +89,14 @@ int execute(char *const command[], char **envp)
 		}
 		else if (id == 0)
 		{
-			if (_getenv("PATH") == NULL && access(command[0], F_OK) != 0)
+			if (
+				(_getenv("PATH") == NULL && access(command[0], F_OK) != 0)
+				|| envp == NULL
+				)
             		{
                 		fprintf(stderr, "./hsh: 1: %s: not found\n", command[0]);
-                		exit(EXIT_FAILURE);
+				free(*command);
+                		exit(127);
             		}
 			execve(temp[0], command, envp);
 			for (i = 0; command[i] != NULL; i++)
