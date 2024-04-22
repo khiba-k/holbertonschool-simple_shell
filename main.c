@@ -1,6 +1,6 @@
 #include "simpleshell.h"
 
-char **env, *command;
+/*char **env, *command;*/
 
 /**
  * print_env - prints the environment
@@ -9,19 +9,21 @@ char **env, *command;
 
 int print_env(void)
 {
-    int i = 0;
-    if (env == NULL)
-	    return(-1);
-    while (env[i])
-    {
-        printf("%s\n", env[i++]);
-    }
-    return (0);
+	int i = 0;
+
+	if (env == NULL)
+		return (-1);
+	while (env[i])
+	{
+		printf("%s\n", env[i++]);
+	}
+	return (0);
 }
 
 /**
  * parse - tokenizes
  * @command: command from the user
+ * @envp: enviroment path
  */
 
 void parse(char command[], char **envp)
@@ -37,21 +39,21 @@ void parse(char command[], char **envp)
 		token = strtok(NULL, " ");
 	}
 	if (arg_count > 11)
-        {
-                perror("Error: Too many arguments");
-                return;
-        }
+	{
+		perror("Error: Too many arguments");
+		return;
+	}
 	arguments[arg_count] = NULL;
 	if (arg_count > 0)
-    	{
-        	if (envp != NULL)
-            		execute(arguments, envp);
-        	else
-        	{
-            		fprintf(stderr, "./hsh: 1: %s: not found\n", arguments[0]);
-            		exit(127);
-        	}
-    	}
+	{
+		if (envp != NULL)
+			execute(arguments, envp);
+		else
+		{
+			fprintf(stderr, "./hsh: 1: %s: not found\n", arguments[0]);
+			exit(127);
+		}
+	}
 }
 
 /**
@@ -85,48 +87,46 @@ void input(char **command, size_t *size)
  * Return: 1 if command fails
  */
 
-int main(int argc, char *argv[], char **envp) { 
-    size_t size;
+int main(int argc, char *argv[], char **envp)
+{
+	size_t size;
 
-    env = envp;
-    command = NULL;
-
-    (void) argv;
-    if (argc > 1)
-    {
-	    printf("./shell: command does not exist\n");
-	    exit(EXIT_FAILURE);
-    }
-    while (1) 
-    {
-	size = 0;
-	if (isatty(STDIN_FILENO))
-	       printf("($) ");
-
-        input(&command, &size);
-        if (strcmp(command, "exit") == 0)
+	env = envp;
+	command = NULL;
+	(void) argv;
+	if (argc > 1)
 	{
-            free(command);
-            exit(EXIT_SUCCESS);
-        }
-	if (strcmp(command, "env") == 0)
-    	{
-        	print_env();
-		free(command);
-        	exit(EXIT_SUCCESS);
-    	}
-	if (_getenv("PATH") == NULL)
-    	{
-		if (command[0] != '/')
+		printf("./shell: command does not exist\n");
+		exit(EXIT_FAILURE);
+	}
+	while (1)
+	{
+		size = 0;
+		if (isatty(STDIN_FILENO))
+			printf("($) ");
+		input(&command, &size);
+		if (strcmp(command, "exit") == 0)
 		{
-            		fprintf(stderr, "./hsh: 1: %s: not found\n", command);
-            		free(command);
-            		exit(127);
+			free(command);
+			exit(EXIT_SUCCESS);
 		}
-    	}
-        parse(command, envp);
-	free(command);
-    }
-    return 0;
+		if (strcmp(command, "env") == 0)
+		{
+			print_env();
+			free(command);
+			exit(EXIT_SUCCESS);
+		}
+		if (_getenv("PATH", envp) == NULL)
+		{
+			if (command[0] != '/')
+			{
+				fprintf(stderr, "./hsh: 1: %s: not found\n", command);
+				free(command);
+				exit(127);
+			}
+		}
+		parse(command, envp);
+		free(command);
+	}
+	return (0);
 }
-
