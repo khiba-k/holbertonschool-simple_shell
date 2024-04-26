@@ -1,6 +1,6 @@
 #include "simpleshell.h"
 
-/*char **env, *command;*/
+char **env, *command;
 
 /**
  * print_env - prints the environment
